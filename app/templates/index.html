@@ -1,6 +1,35 @@
-<title>
-    Ktronic Backend Test
-</title>
-<form>
-    <a method="post" href="/auth/signup">Sing up or login</button>
-</form>
+<head>
+    <title>
+        Ktronic Backend Test
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!-- Main Layout -->
+        <!-- sidebar -->
+        <main class="flex h-full">
+
+            <aside class="border h-full border-solid border-black p-2 basis-1/5">
+     
+                     <nav class="flex flex-col content-around bg-gray-300 h-full p-2 rounded justify-around items-center">
+                         <a  hx-get="/inventory">Inventory</a>
+                         <a hx-get="/sellings">Sellings</a>
+                         <a hx-get="/pos">POS</a>
+                         <a href="">Option</a>
+                         <a href="">Option</a>
+                         <button hx-get="/" class="border border-solid border-black p-3">light theme</button>
+                     </nav>
+     
+            </aside>
+     
+            <!-- Content -->
+             <div class="h-full border border-black border-solid basis-4/5 grid place-content-center">
+     
+                 <h1>Go to <a href="auth/login" class="text-blue-400 hover:text-blue-300" >Log In</a> or <a class="text-blue-400 hover:text-blue-300" href="auth/signup">Sign Up</a></h1>
+             </div>
+        </main>
+
+
+</body>

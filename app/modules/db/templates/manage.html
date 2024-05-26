@@ -1,0 +1,31 @@
+<head>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <main class="block flex flex-col justify-center content-center h-full bg-gray-300">
+        
+        <h1 class="self-center text-4xl text-black mb-10">Ktronic Databases</h1>
+        <!-- Lista de las dbs -->
+    <div name="dbs" class="flex flex-col gap-2 self-center" >
+        {% for db in dbs %}
+            <!-- db item component -->
+            <div key="{{ db['id'] }}"  class="border border-black border-solid p-2">
+                <!-- name -->
+                <p class="text-bold text-3xl text-center p-2" > {{ db['name'] }}</p>
+                <div name="buttons">
+                    <button class="border border-black border-solid p-2 hover:bg-white">Backup</button>
+                    <button class="border border-black border-solid p-2 hover:bg-white">Delete</button>
+                    <button class="border border-black border-solid p-2 hover:bg-white">Reset</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    </main>
+    
+</body>
