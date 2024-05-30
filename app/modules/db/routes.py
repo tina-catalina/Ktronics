@@ -6,6 +6,7 @@ from sqlalchemy import text
 from . import db
 from app.utils.settings import (
     check_dbs, 
+    engine_generator,
     default_engine_generator, 
     get_session, 
     add_db, 
@@ -17,6 +18,7 @@ from app.models.sys import SysUsers
 from app.utils.crud import create as create_model
 from models import init_db
 
+
 #TODO: Some kind of visual validation for select which password is currenttly being used, perhaps in the view
 #First the DB preview search for the created DB, the list is in the .db_list file and returns the dbs as context
 @db.route("/preview", methods=["GET", "POST"])
@@ -24,6 +26,7 @@ def preview():
     dbs = check_dbs()
     ctx = dbs if dbs else {}
     return render_template("manage.html", **ctx)
+
 
 #This endpoint changes the active DB, getting the name of the clicked DB on the view and redirects to preview after that
 @db.route("/preview/<db_name>", methods=["POST"])
@@ -50,12 +53,15 @@ def create():
                 "email": f"{data['admin_name']}",
                 "is_admin": True
             }
-            create_model(model_data, SysUsers)
+            engine = engine_generator()[data["db_name"]]
+            Session = get_session(engine)
+            create_model(model_data, SysUsers, Session)
         except Exception as e:
             print(e)
         return response        
     else:
         return render_template("create.html")
+
 
 # TODO: Validate password on delete
 #Delete gets the name of the DB and redirects to preview after delete the clicked DB
@@ -67,6 +73,7 @@ def delete(name):
         return response
     else:
         return response
+
 
 #Creates new transaction and with the Password and DB Name creates the first DB
 def create_db(admin_password: str, db_name: Optional[str]):
@@ -83,14 +90,15 @@ def create_db(admin_password: str, db_name: Optional[str]):
                 session.commit()
         except Exception as e:
             print(e)
-        init_db()
+        init_db(db_name)
     else: 
         return print("You have to provide a password and db name")
 
+
+# TODO: Some bugs with delete, determine why sessions are not closing correctly in order to delete the DB, on refresh or reload it works as supposed
 #Creates new transaction and deletes the given DB
 def delete_db(db_name: Optional[str] = None) -> any:
     if db_name:
-        #get_session(db_name).close_all()
         query: text = text(f"DROP DATABASE {db_name};")
         engine = default_engine_generator()
         Session = get_session(engine)

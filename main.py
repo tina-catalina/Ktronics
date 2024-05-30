@@ -3,8 +3,12 @@ from app import create_app
 
 app = create_app()
 
-# TODO: Validate if there's no DB in the .db_list file and redirect to create
-# TODO: Create .db_list.json on start
+# Here creates the .db_list.json file if it doesn't exist
+
+with open(".db_list.json", "a") as f:
+    f.close()
+
+#TODO: Some validation to assure that for signup there's has to be a DB
 
 @app.route("/")
 def landing():
