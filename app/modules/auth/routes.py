@@ -6,7 +6,6 @@ from app.utils.crud import create
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     data = request.form.to_dict(flat=True)
-    print(data)
     if request.method == "POST" and data:
         create(data, SysUsers)
 

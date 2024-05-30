@@ -1,10 +1,10 @@
 from flask import render_template, redirect
 from app import create_app
-from models import init_db
 
 app = create_app()
 
-db = init_db()
+# TODO: Validate if there's no DB in the .db_list file and redirect to create
+# TODO: Create .db_list.json on start
 
 @app.route("/")
 def landing():
