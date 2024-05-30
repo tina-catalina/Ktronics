@@ -1,0 +1,21 @@
+<body>
+    <main>
+        <div>
+            <h1>Create DB</h1>
+            <form action="/db/create" method="post">
+                <span>
+                    {{ password }}
+                </span>
+                <label for="name">DB Name</label>
+                <input id="db_name" name="db_name" type="text">
+                <label for="name">Admin Name</label>
+                <input id="admin_name" name="admin_name" type="text">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password">
+                <label for="repeat_password">Repeat Password</label>
+                <input id="repeat_password" name="repeat_password" type="password">
+                <button type="submit" hx-post="/create" hx-target="body">Create</button>
+            </form>
+        </div>
+    </main>
+</body>

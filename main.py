@@ -1,10 +1,14 @@
 from flask import render_template, redirect
 from app import create_app
-from models import init_db
 
 app = create_app()
 
-db = init_db()
+# Here creates the .db_list.json file if it doesn't exist
+
+with open(".db_list.json", "a") as f:
+    f.close()
+
+#TODO: Some validation to assure that for signup there's has to be a DB
 
 @app.route("/")
 def landing():

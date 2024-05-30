@@ -1,0 +1,47 @@
+<head>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <main class="block flex flex-col justify-center content-center h-full bg-gray-300">
+        
+        <h1 class="self-center text-4xl text-black mb-10">Ktronic Databases</h1>
+        <!-- Lista de las dbs -->
+
+    <div name="dbs" class="flex flex-col gap-2 self-center" >
+        {% if not dbs %}
+            <button class="border border-black border-solid p-2 hover:bg-white" onclick="window.location.href='/db/create'">Create First DB</button>
+            {% else %}
+            {% for db in dbs %}
+                <!-- db item component -->
+                <form action="/auth/signup" method="post" key="{{ db['id'] }}" class="border border-black border-solid p-2">
+                    <!-- name -->
+                    <p class="text-bold text-3xl text-center p-2" > 
+                        <a href="" hx-post="/db/preview/{{ db['name'] }}" hx-target="body">
+                            {{ db['name'] }}
+                        </a>
+                    </p>
+                    <div name="buttons">
+                        <button class="border border-black border-solid p-2 hover:bg-white">Backup</button>
+                        <button 
+                            class="border border-black border-solid p-2 hover:bg-white" type="submit"
+                            hx-post="/db/delete/{{ db['name'] }}" 
+                            hx-target="body" 
+                            hx-confirm="Are you sure? you want to delete {{ db['name'] }}">
+                                Delete
+                            </button>
+                        <button class="border border-black border-solid p-2 hover:bg-white">Reset</button>
+                    </div>
+                </form>
+            {% endfor %}
+                <button class="border border-black border-solid p-2 hover:bg-white" onclick="window.location.href='/db/create'">Create DB</button>
+        {% endif %}
+    </div>
+
+    </main>
+    
+</body>
